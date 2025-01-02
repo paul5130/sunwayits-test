@@ -11,10 +11,10 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		D76D18EB2D23E6A3008EA988 /* Exceptions for "sunwayits" folder in "sunwayits" target */ = {
+		D76D190D2D23EB52008EA988 /* Exceptions for "sunwayits" folder in "sunwayits" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				"Supporting Files/Info.plist",
 			);
 			target = D76D18D82D23E6A2008EA988 /* sunwayits */;
 		};
@@ -24,7 +24,7 @@
 		D76D18DB2D23E6A2008EA988 /* sunwayits */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				D76D18EB2D23E6A3008EA988 /* Exceptions for "sunwayits" folder in "sunwayits" target */,
+				D76D190D2D23EB52008EA988 /* Exceptions for "sunwayits" folder in "sunwayits" target */,
 			);
 			path = sunwayits;
 			sourceTree = "<group>";
@@ -147,7 +147,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 34Q7A274UP;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = sunwayits/Info.plist;
+				INFOPLIST_FILE = "sunwayits/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -179,7 +179,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 34Q7A274UP;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = sunwayits/Info.plist;
+				INFOPLIST_FILE = "sunwayits/Supporting Files/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
