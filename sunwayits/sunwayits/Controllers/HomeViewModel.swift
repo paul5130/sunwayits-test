@@ -101,45 +101,45 @@ class HomeViewModel{
 
 extension HomeViewModel{
     func fetchSingleApi<T: Decodable>(url: String, completion: @escaping (Result<T, APIError>) -> Void) {
-            apiService.fetchData(from: url, completion: completion)
-        }
+        apiService.fetchData(from: url, completion: completion)
+    }
     func fetchMultipleApis(urls: [String], completion: @escaping (Result<[Friend], APIError>) -> Void) {
-            var results = [Friend]()
-            let group = DispatchGroup()
-            var fetchError: APIError?
-
-            for url in urls {
-                group.enter()
-                fetchSingleApi(url: url) { (result: Result<FriendResponse, APIError>) in
-                    switch result {
-                    case .success(let response):
-                        results.append(contentsOf: response.response)
-                    case .failure(let error):
-                        fetchError = error
-                    }
-                    group.leave()
+        var results = [Friend]()
+        let group = DispatchGroup()
+        var fetchError: APIError?
+        
+        for url in urls {
+            group.enter()
+            fetchSingleApi(url: url) { (result: Result<FriendResponse, APIError>) in
+                switch result {
+                case .success(let response):
+                    results.append(contentsOf: response.response)
+                case .failure(let error):
+                    fetchError = error
                 }
-            }
-
-            group.notify(queue: .main) {
-                if let error = fetchError {
-                    completion(.failure(error))
-                } else {
-                    completion(.success(results))
-                }
+                group.leave()
             }
         }
+        
+        group.notify(queue: .main) {
+            if let error = fetchError {
+                completion(.failure(error))
+            } else {
+                completion(.success(results))
+            }
+        }
+    }
     static func mergeFriends(_ friends: [Friend]) -> [Friend] {
-            var mergedDict = [String: Friend]()
-            for friend in friends {
-                if let existing = mergedDict[friend.fid] {
-                    if friend.updateDate > existing.updateDate {
-                        mergedDict[friend.fid] = friend
-                    }
-                } else {
+        var mergedDict = [String: Friend]()
+        for friend in friends {
+            if let existing = mergedDict[friend.fid] {
+                if friend.updateDate > existing.updateDate {
                     mergedDict[friend.fid] = friend
                 }
+            } else {
+                mergedDict[friend.fid] = friend
             }
-            return Array(mergedDict.values)
         }
+        return Array(mergedDict.values)
+    }
 }

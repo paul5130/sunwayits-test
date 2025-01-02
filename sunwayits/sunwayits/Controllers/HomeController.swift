@@ -18,13 +18,13 @@ class HomeController: UIViewController{
     private lazy var dollarBarButton = createBarButton(image: .navTransfer, action: #selector(handleBack))
     private lazy var scanBarButton = createBarButton(image: .navScan, action: #selector(handleBack))
     private let headerView = HeaderView()
-    private let emptyFriendsView = EmptyFriendsView()
+    let emptyFriendsView = EmptyFriendsView()
     private var invitingFriends = [Friend]()
-    private var friends = [Friend]()
-    @objc private func handleBack(){
+    var friends = [Friend]()
+    @objc func handleBack(){
         navigationController?.popViewController(animated: true)
     }
-    private lazy var tableView: UITableView = {
+    lazy var tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.keyboardDismissMode = .onDrag
         tableView.backgroundColor = .backgroundColor()
@@ -33,7 +33,7 @@ class HomeController: UIViewController{
         tableView.separatorStyle = .none
         return tableView
     }()
-    private lazy var refreshControl: UIRefreshControl = {
+    lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
         return refreshControl
@@ -87,7 +87,7 @@ class HomeController: UIViewController{
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    @objc private func handleKeyboardWillShow(notification: Notification) {
+    @objc func handleKeyboardWillShow(notification: Notification) {
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
         adjustTableViewForKeyboard(show: true, keyboardFrame: keyboardFrame)
     }
