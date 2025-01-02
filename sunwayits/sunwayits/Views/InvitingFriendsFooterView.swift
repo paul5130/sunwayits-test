@@ -47,19 +47,19 @@ class InvitingFriendsFooterView: UIView{
     }
 }
 
-import SwiftUI
-
-struct FriendsHeaderView_Previews: PreviewProvider {
-    static var previews: some View{
-        ContainerView()
-            .previewLayout(.fixed(width: 375, height: 40))
-    }
-    struct ContainerView: UIViewRepresentable {
-        func updateUIView(_ uiView: UIViewType, context: Context) {
-            
-        }
-        func makeUIView(context: Context) -> some UIView {
-            InvitingFriendsFooterView()
-        }
-    }
-}
+//import SwiftUI
+//
+//struct FriendsHeaderView_Previews: PreviewProvider {
+//    static var previews: some View{
+//        ContainerView()
+//            .previewLayout(.fixed(width: 375, height: 40))
+//    }
+//    struct ContainerView: UIViewRepresentable {
+//        func updateUIView(_ uiView: UIViewType, context: Context) {
+//            
+//        }
+//        func makeUIView(context: Context) -> some UIView {
+//            InvitingFriendsFooterView()
+//        }
+//    }
+//}

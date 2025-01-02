@@ -67,19 +67,19 @@ extension HeaderView{
     }
 }
 
-import SwiftUI
-
-struct HeaderView_Previews: PreviewProvider {
-    static var previews: some View{
-        ContainerView()
-            .previewLayout(.fixed(width: 375, height: 80))
-    }
-    struct ContainerView: UIViewRepresentable {
-        func updateUIView(_ uiView: UIViewType, context: Context) {
-            
-        }
-        func makeUIView(context: Context) -> some UIView {
-            HeaderView()
-        }
-    }
-}
+//import SwiftUI
+//
+//struct HeaderView_Previews: PreviewProvider {
+//    static var previews: some View{
+//        ContainerView()
+//            .previewLayout(.fixed(width: 375, height: 80))
+//    }
+//    struct ContainerView: UIViewRepresentable {
+//        func updateUIView(_ uiView: UIViewType, context: Context) {
+//            
+//        }
+//        func makeUIView(context: Context) -> some UIView {
+//            HeaderView()
+//        }
+//    }
+//}

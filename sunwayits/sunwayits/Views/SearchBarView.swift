@@ -46,19 +46,19 @@ extension SearchBarView: UISearchBarDelegate{
 extension Notification.Name{
     static let searchBarTextDidChange = Notification.Name("searchBarTextDidChange")
 }
-import SwiftUI
-
-struct SearchBarView_Previews: PreviewProvider {
-    static var previews: some View{
-        ContainerView()
-            .previewLayout(.fixed(width: 375, height: 60))
-    }
-    struct ContainerView: UIViewRepresentable {
-        func updateUIView(_ uiView: UIViewType, context: Context) {
-            
-        }
-        func makeUIView(context: Context) -> some UIView {
-            SearchBarView()
-        }
-    }
-}
+//import SwiftUI
+//
+//struct SearchBarView_Previews: PreviewProvider {
+//    static var previews: some View{
+//        ContainerView()
+//            .previewLayout(.fixed(width: 375, height: 60))
+//    }
+//    struct ContainerView: UIViewRepresentable {
+//        func updateUIView(_ uiView: UIViewType, context: Context) {
+//            
+//        }
+//        func makeUIView(context: Context) -> some UIView {
+//            SearchBarView()
+//        }
+//    }
+//}

@@ -94,19 +94,19 @@ extension InvitingFriendCell{
     }
 }
 
-import SwiftUI
-
-struct InvitingFriendCell_Previews: PreviewProvider {
-    static var previews: some View{
-        ContainerView()
-            .previewLayout(.fixed(width: 315, height: 80))
-    }
-    struct ContainerView: UIViewRepresentable {
-        func updateUIView(_ uiView: UIViewType, context: Context) {
-            
-        }
-        func makeUIView(context: Context) -> some UIView {
-            InvitingFriendCell()
-        }
-    }
-}
+//import SwiftUI
+//
+//struct InvitingFriendCell_Previews: PreviewProvider {
+//    static var previews: some View{
+//        ContainerView()
+//            .previewLayout(.fixed(width: 315, height: 80))
+//    }
+//    struct ContainerView: UIViewRepresentable {
+//        func updateUIView(_ uiView: UIViewType, context: Context) {
+//            
+//        }
+//        func makeUIView(context: Context) -> some UIView {
+//            InvitingFriendCell()
+//        }
+//    }
+//}

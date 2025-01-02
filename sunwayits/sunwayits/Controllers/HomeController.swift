@@ -7,20 +7,16 @@
 
 import UIKit
 
+enum TableViewSection: Int, CaseIterable {
+    case invitingFriends = 0
+    case friends = 1
+}
+
 class HomeController: UIViewController{
     private let viewModel: HomeViewModel
-    private lazy var atmBarButton: UIBarButtonItem = {
-        let barButton = UIBarButtonItem(image: .navATM.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleBack))
-        return barButton
-    }()
-    private lazy var dollarBarButton: UIBarButtonItem = {
-        let barButton = UIBarButtonItem(image: .navTransfer.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleBack))
-        return barButton
-    }()
-    private lazy var scanBarButton: UIBarButtonItem = {
-        let barButton = UIBarButtonItem(image: .navScan.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleBack))
-        return barButton
-    }()
+    private lazy var atmBarButton = createBarButton(image: .navATM, action: #selector(handleBack))
+    private lazy var dollarBarButton = createBarButton(image: .navTransfer, action: #selector(handleBack))
+    private lazy var scanBarButton = createBarButton(image: .navScan, action: #selector(handleBack))
     private let headerView = HeaderView()
     private let emptyFriendsView = EmptyFriendsView()
     private var invitingFriends = [Friend]()
@@ -73,7 +69,7 @@ class HomeController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        setupObserver()
+        setupKeyboardObservers()
         fetchData()
     }
     @objc private func handleSearchNotification(_ notification: Notification){
@@ -91,79 +87,99 @@ class HomeController: UIViewController{
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    @objc private func handleKeyboardWillShow(notification: Notification){
-        guard let userInfo = notification.userInfo else { return }
-        var keyboardFrame = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
-        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
-        var contentInset = self.tableView.contentInset
-        contentInset.bottom = keyboardFrame.size.height + 300
-        tableView.contentInset = contentInset
-        tableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: UITableView.ScrollPosition.top, animated: true)
+    @objc private func handleKeyboardWillShow(notification: Notification) {
+        guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
+        adjustTableViewForKeyboard(show: true, keyboardFrame: keyboardFrame)
     }
-    @objc private func handleKeyboardWillHide(notification: Notification){
-        tableView.contentInset = .zero
+    
+    @objc private func handleKeyboardWillHide(notification: Notification) {
+        adjustTableViewForKeyboard(show: false, keyboardFrame: .zero)
+    }
+    
+    private func adjustTableViewForKeyboard(show: Bool, keyboardFrame: CGRect) {
+        var contentInset = tableView.contentInset
+        contentInset.bottom = show ? keyboardFrame.height + 300 : 0
+        tableView.contentInset = contentInset
     }
     private func fetchData(){
+        fetchUserData()
+        fetchFriendsData()
+    }
+    private func fetchFriendsData(){
         viewModel.fetchFriends {[weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let friendsData):
-                print(friendsData)
-                self?.invitingFriends = friendsData.invitingFriends
-                self?.friends = friendsData.friends
-                DispatchQueue.main.async {
-                    self?.emptyFriendsView.isHidden = !friendsData.isEmpty
-                    self?.refreshControl.endRefreshing()
-                    self?.tableView.reloadData()
-                }
+                self.updateFriendList(with: friendsData)
             case .failure(let failure):
                 print(failure)
             }
         }
+    }
+    private func fetchUserData(){
         viewModel.fetchUserData { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let userData):
                 DispatchQueue.main.async {
-                    self?.headerView.configure(with: userData.name, kokoId: userData.kokoid)
+                    self.headerView.configure(with: userData.name, kokoId: userData.kokoid)
                 }
             case .failure(let failure):
                 print(failure)
             }
         }
     }
-    private func setupObserver(){
+    private func updateFriendList(with data: FriendsData) {
+        invitingFriends = data.invitingFriends
+        friends = data.friends
+        DispatchQueue.main.async {
+            self.emptyFriendsView.isHidden = !data.isEmpty
+            self.refreshControl.endRefreshing()
+            self.tableView.reloadData()
+        }
+    }
+    private func setupKeyboardObservers(){
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleSearchNotification), name: .searchBarTextDidChange, object: nil)
-        
+    }
+    private func createBarButton(image: UIImage, action: Selector) -> UIBarButtonItem {
+        UIBarButtonItem(
+            image: image.withRenderingMode(.alwaysOriginal),
+            style: .plain,
+            target: self,
+            action: action)
     }
 }
 extension HomeController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0{
+        guard let sectionType = TableViewSection(rawValue: section) else { return 0 }
+        switch sectionType {
+        case .invitingFriends:
             return invitingFriends.count
-        }else if section == 1{
+        case .friends:
             return friends.count
-        }else {
-            return 0
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0{
+        guard let sectionType = TableViewSection(rawValue: indexPath.section) else {
+            return UITableViewCell()
+        }
+        switch sectionType {
+        case .invitingFriends:
             let cell = tableView.dequeueReusableCell(withIdentifier: invitingFriendCellId, for: indexPath) as! InvitingFriendCell
             cell.selectionStyle = .none
             cell.configure(with: invitingFriends[indexPath.row].name)
             return cell
-        }else if indexPath.section == 1{
+        case .friends:
             let cell = tableView.dequeueReusableCell(withIdentifier: friendCellId, for: indexPath) as! FriendCell
             cell.configure(with: FriendCellViewModel(friend: friends[indexPath.row]))
             cell.selectionStyle = .none
             return cell
-        }else{
-            return UITableViewCell()
         }
     }
     func numberOfSections(in tableView: UITableView) -> Int {
-        2
+        TableViewSection.allCases.count
     }
     
 }
@@ -199,7 +215,7 @@ extension HomeController: UITableViewDelegate{
 //            return navController
 //        }
 //        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-//            
+//
 //        }
 //    }
 //}

@@ -18,6 +18,8 @@ struct FriendCellViewModel{
         case completed = 1
         case pending = 2
         case unknown = -1
+        var isPending: Bool { self == .pending }
+        var isCompleted: Bool { self == .completed }
     }
     init(friend: Friend) {
         self.id = friend.fid
@@ -99,9 +101,7 @@ class FriendCell: UITableViewCell{
         stackView.addArrangedSubview(nameLabel)
         stackView.addArrangedSubview(UIView())
         stackView.addArrangedSubview(transferButton)
-//        stackView.addArrangedSubview(createEmptyView(width: 10))
         stackView.addArrangedSubview(invitingButton)
-//        stackView.addArrangedSubview(createEmptyView(width: 30))
         stackView.addArrangedSubview(threeDotButton)
         addSubview(lineView)
         lineView.anchor(top: nil, left: nameLabel.leftAnchor, bottom: bottomAnchor, right: stackView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 1)
@@ -120,24 +120,24 @@ extension FriendCell{
     func configure(with model: FriendCellViewModel){
         nameLabel.text = model.name
         starView.alpha = model.showStar ? 1 : 0
-        threeDotButton.isHidden = model.friendStatus == .pending
-        invitingButton.isHidden = model.friendStatus == .completed
+        threeDotButton.isHidden = model.friendStatus.isPending
+        invitingButton.isHidden = model.friendStatus.isCompleted
     }
 }
 
-import SwiftUI
-
-struct FriendCell_Previews: PreviewProvider {
-    static var previews: some View{
-        ContainerView()
-            .previewLayout(.fixed(width: 375, height: 60))
-    }
-    struct ContainerView: UIViewRepresentable {
-        func updateUIView(_ uiView: UIViewType, context: Context) {
-            
-        }
-        func makeUIView(context: Context) -> some UIView {
-            FriendCell()
-        }
-    }
-}
+//import SwiftUI
+//
+//struct FriendCell_Previews: PreviewProvider {
+//    static var previews: some View{
+//        ContainerView()
+//            .previewLayout(.fixed(width: 375, height: 60))
+//    }
+//    struct ContainerView: UIViewRepresentable {
+//        func updateUIView(_ uiView: UIViewType, context: Context) {
+//            
+//        }
+//        func makeUIView(context: Context) -> some UIView {
+//            FriendCell()
+//        }
+//    }
+//}

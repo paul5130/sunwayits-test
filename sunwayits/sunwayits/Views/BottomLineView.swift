@@ -58,19 +58,19 @@ extension BottomLineView{
     }
 }
 
-import SwiftUI
-
-struct BottomLineView_Previews: PreviewProvider {
-    static var previews: some View{
-        ContainerView()
-            .previewLayout(.fixed(width: 60, height: 40))
-    }
-    struct ContainerView: UIViewRepresentable {
-        func updateUIView(_ uiView: UIViewType, context: Context) {
-            
-        }
-        func makeUIView(context: Context) -> some UIView {
-            BottomLineView()
-        }
-    }
-}
+//import SwiftUI
+//
+//struct BottomLineView_Previews: PreviewProvider {
+//    static var previews: some View{
+//        ContainerView()
+//            .previewLayout(.fixed(width: 60, height: 40))
+//    }
+//    struct ContainerView: UIViewRepresentable {
+//        func updateUIView(_ uiView: UIViewType, context: Context) {
+//            
+//        }
+//        func makeUIView(context: Context) -> some UIView {
+//            BottomLineView()
+//        }
+//    }
+//}

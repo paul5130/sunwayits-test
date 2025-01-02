@@ -122,20 +122,20 @@ class EmptyFriendsView: UIView{
     }
 }
 
-import SwiftUI
-
-struct CommentHeaderView_Previews: PreviewProvider {
-    static var previews: some View{
-        ContainerView()
-            .previewLayout(.fixed(width: 375, height: 445))
-    }
-    struct ContainerView: UIViewRepresentable {
-        func updateUIView(_ uiView: UIViewType, context: Context) {
-            
-        }
-        func makeUIView(context: Context) -> some UIView {
-            EmptyFriendsView()
-        }
-    }
-}
+//import SwiftUI
+//
+//struct CommentHeaderView_Previews: PreviewProvider {
+//    static var previews: some View{
+//        ContainerView()
+//            .previewLayout(.fixed(width: 375, height: 445))
+//    }
+//    struct ContainerView: UIViewRepresentable {
+//        func updateUIView(_ uiView: UIViewType, context: Context) {
+//            
+//        }
+//        func makeUIView(context: Context) -> some UIView {
+//            EmptyFriendsView()
+//        }
+//    }
+//}
 
