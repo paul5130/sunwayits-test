@@ -90,6 +90,7 @@ class HomeController: UIViewController{
     @objc func handleKeyboardWillShow(notification: Notification) {
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else { return }
         adjustTableViewForKeyboard(show: true, keyboardFrame: keyboardFrame)
+        tableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: .top, animated: true)
     }
     
     @objc private func handleKeyboardWillHide(notification: Notification) {
@@ -140,6 +141,7 @@ class HomeController: UIViewController{
     }
     private func setupKeyboardObservers(){
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleSearchNotification), name: .searchBarTextDidChange, object: nil)
     }
     private func createBarButton(image: UIImage, action: Selector) -> UIBarButtonItem {
