@@ -7,6 +7,11 @@
 
 import Foundation
 
+struct GetFriend: Decodable{
+    let response: [Friend]
+    
+}
+
 struct Friend: Decodable{
     let name: String
     let status: Int

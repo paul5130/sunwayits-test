@@ -7,6 +7,27 @@
 
 import UIKit
 
+struct FriendCellViewModel{
+    let id: String
+    let name: String
+    let updateDate: String
+    let showStar: Bool
+    let friendStatus: FriendStatus
+    enum FriendStatus: Int, Decodable{
+        case sent = 0
+        case completed = 1
+        case pending = 2
+        case unknown = -1
+    }
+    init(friend: Friend) {
+        self.id = friend.fid
+        self.name = friend.name
+        self.updateDate = friend.updateDate
+        self.showStar = friend.isTop == "1"
+        self.friendStatus = FriendStatus(rawValue: friend.status) ?? .unknown
+    }
+}
+
 class FriendCell: UITableViewCell{
     private let starView: UIImageView = {
         let iv = UIImageView()
@@ -25,7 +46,6 @@ class FriendCell: UITableViewCell{
     }()
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "1123"
         label.textColor = .textColor()
         label.font = .systemFont(ofSize: 16, weight: .regular)
         return label
@@ -57,9 +77,10 @@ class FriendCell: UITableViewCell{
     private let stackView: UIStackView = {
         let sv = UIStackView()
         sv.axis = .horizontal
+        sv.spacing = 10
         return sv
     }()
-    private let bottomLineView: UIView = {
+    private let lineView: UIView = {
         let view = UIView()
         view.backgroundColor = .bottomLineColor()
         return view
@@ -75,27 +96,32 @@ class FriendCell: UITableViewCell{
         addSubview(stackView)
         stackView.anchor(top: nil, left: avatarView.rightAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 15, paddingBottom: 0, paddingRight: 30, width: 0, height: 24)
         stackView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-//        stackView.backgroundColor = .purple
         stackView.addArrangedSubview(nameLabel)
         stackView.addArrangedSubview(UIView())
         stackView.addArrangedSubview(transferButton)
-        stackView.addArrangedSubview(createEmptyView(width: 10))
+//        stackView.addArrangedSubview(createEmptyView(width: 10))
         stackView.addArrangedSubview(invitingButton)
-        stackView.addArrangedSubview(createEmptyView(width: 30))
+//        stackView.addArrangedSubview(createEmptyView(width: 30))
         stackView.addArrangedSubview(threeDotButton)
-        addSubview(bottomLineView)
-        bottomLineView.anchor(top: nil, left: nameLabel.leftAnchor, bottom: bottomAnchor, right: stackView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 1)
+        addSubview(lineView)
+        lineView.anchor(top: nil, left: nameLabel.leftAnchor, bottom: bottomAnchor, right: stackView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 1)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
-extension FriendCell{
     private func createEmptyView(width: CGFloat) -> UIView{
         let view = UIView()
         view.widthAnchor.constraint(equalToConstant: width).isActive = true
         return view
+    }
+}
+extension FriendCell{
+    func configure(with model: FriendCellViewModel){
+        nameLabel.text = model.name
+        starView.alpha = model.showStar ? 1 : 0
+        threeDotButton.isHidden = model.friendStatus == .pending
+        invitingButton.isHidden = model.friendStatus == .completed
     }
 }
 

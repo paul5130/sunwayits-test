@@ -34,14 +34,13 @@ class InvitingFriendCell: UITableViewCell{
     }()
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "1123"
         label.textColor = .textColor()
         label.font = .systemFont(ofSize: 16, weight: .regular)
         return label
     }()
     private let invitingLabel: UILabel = {
         let label = UILabel()
-        label.text = "434"
+        label.text = "邀請你成為好友：）"
         label.textColor = .lightGrey()
         label.font = .systemFont(ofSize: 13, weight: .regular)
         return label
@@ -86,6 +85,12 @@ class InvitingFriendCell: UITableViewCell{
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension InvitingFriendCell{
+    func configure(with name: String){
+        nameLabel.text = name
     }
 }
 

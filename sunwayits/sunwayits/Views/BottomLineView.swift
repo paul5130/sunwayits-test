@@ -10,7 +10,6 @@ import UIKit
 class BottomLineView: UIView{
     private let numberLabel: UILabel = {
         let label = UILabel()
-        label.text = " 99+ "
         label.textColor = .white
         label.textAlignment = .center
         label.backgroundColor = .hotPink()
@@ -22,7 +21,6 @@ class BottomLineView: UIView{
     }()
     private let textLabel: UILabel = {
         let label = UILabel()
-        label.text = "好友"
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 13, weight: .medium)
         label.textColor = .textColor()
@@ -50,6 +48,13 @@ class BottomLineView: UIView{
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension BottomLineView{
+    func configure(text: String, numberString: String){
+        textLabel.text = text
+        numberLabel.text = numberString
     }
 }
 

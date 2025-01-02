@@ -8,23 +8,26 @@
 import UIKit
 
 class HomeController: UIViewController{
-    private let atmBarButton: UIBarButtonItem = {
-        let barButton = UIBarButtonItem()
-        barButton.image = .navATM.withRenderingMode(.alwaysOriginal)
+    private let viewModel: HomeViewModel
+    private lazy var atmBarButton: UIBarButtonItem = {
+        let barButton = UIBarButtonItem(image: .navATM.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleBack))
         return barButton
     }()
-    private let dollarBarButton: UIBarButtonItem = {
-        let barButton = UIBarButtonItem()
-        barButton.image = .navTransfer.withRenderingMode(.alwaysOriginal)
+    private lazy var dollarBarButton: UIBarButtonItem = {
+        let barButton = UIBarButtonItem(image: .navTransfer.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleBack))
         return barButton
     }()
-    private let scanBarButton: UIBarButtonItem = {
-        let barButton = UIBarButtonItem()
-        barButton.image = .navScan.withRenderingMode(.alwaysOriginal)
+    private lazy var scanBarButton: UIBarButtonItem = {
+        let barButton = UIBarButtonItem(image: .navScan.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleBack))
         return barButton
     }()
     private let headerView = HeaderView()
     private let emptyFriendsView = EmptyFriendsView()
+    private var invitingFriends = [Friend]()
+    private var friends = [Friend]()
+    @objc private func handleBack(){
+        navigationController?.popViewController(animated: true)
+    }
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .backgroundColor()
@@ -36,8 +39,7 @@ class HomeController: UIViewController{
     }()
     private let invitingFriendCellId = "invitingFriendCellId"
     private let friendCellId = "friendCellId"
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    private func setupViews() {
         tableView.register(InvitingFriendCell.self, forCellReuseIdentifier: invitingFriendCellId)
         tableView.register(FriendCell.self, forCellReuseIdentifier: friendCellId)
         view.backgroundColor = .backgroundColor()
@@ -50,13 +52,51 @@ class HomeController: UIViewController{
         view.addSubview(tableView)
         tableView.anchor(top: headerView.bottomAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
     }
+    init(state: FriendState) {
+        self.viewModel = HomeViewModel(friendState: state)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupViews()
+        setupObserver()
+    }
+    private func setupObserver(){
+        viewModel.fetchFriends {[weak self] result in
+            switch result {
+            case .success(let friendsData):
+                print(friendsData)
+                self?.invitingFriends = friendsData.invitingFriends
+                self?.friends = friendsData.friends
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                }
+            case .failure(let failure):
+                print(failure)
+            }
+        }
+        viewModel.fetchUserData { [weak self] result in
+            switch result {
+            case .success(let userData):
+                DispatchQueue.main.async {
+                    self?.headerView.configure(with: userData.name)
+                }
+            case .failure(let failure):
+                print(failure)
+            }
+        }
+    }
 }
 extension HomeController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0{
-            return 2
+            return invitingFriends.count
         }else if section == 1{
-            return 2
+            return friends.count
         }else {
             return 0
         }
@@ -66,9 +106,11 @@ extension HomeController: UITableViewDataSource{
         if indexPath.section == 0{
             let cell = tableView.dequeueReusableCell(withIdentifier: invitingFriendCellId, for: indexPath) as! InvitingFriendCell
             cell.selectionStyle = .none
+            cell.configure(with: invitingFriends[indexPath.row].name)
             return cell
         }else if indexPath.section == 1{
             let cell = tableView.dequeueReusableCell(withIdentifier: friendCellId, for: indexPath) as! FriendCell
+            cell.configure(with: FriendCellViewModel(friend: friends[indexPath.row]))
             cell.selectionStyle = .none
             return cell
         }else{
@@ -103,7 +145,7 @@ struct HomeController_Previews: PreviewProvider {
     }
     struct ContainerView: UIViewControllerRepresentable {
         func makeUIViewController(context: Context) -> some UIViewController {
-            let navController = UINavigationController(rootViewController: HomeController())
+            let navController = UINavigationController(rootViewController: HomeController(state: .noFriends))
             return navController
         }
         func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {

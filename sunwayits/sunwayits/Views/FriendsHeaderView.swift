@@ -23,6 +23,16 @@ class FriendsHeaderView: UIView{
         sv.spacing = 30
         return sv
     }()
+    private let bottomView1: BottomLineView = {
+        let view = BottomLineView()
+        view.configure(text: "好友", numberString: "2")
+        return view
+    }()
+    private let bottomView2: BottomLineView = {
+        let view = BottomLineView()
+        view.configure(text: "聊天", numberString: " 99+ ")
+        return view
+    }()
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .backgroundColor()
@@ -32,8 +42,8 @@ class FriendsHeaderView: UIView{
         searchBarView.anchor(top: horizontalLineView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         addSubview(stackView)
         stackView.anchor(top: topAnchor, left: leftAnchor, bottom: horizontalLineView.topAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 30, paddingBottom: 0, paddingRight: 30, width: 0, height: 0)
-        stackView.addArrangedSubview(BottomLineView())
-        stackView.addArrangedSubview(BottomLineView())
+        stackView.addArrangedSubview(bottomView1)
+        stackView.addArrangedSubview(bottomView2)
         stackView.addArrangedSubview(UIView())
     }
     

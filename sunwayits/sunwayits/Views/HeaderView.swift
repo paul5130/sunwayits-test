@@ -10,7 +10,6 @@ import UIKit
 class HeaderView: UIView{
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "123"
         label.textColor = .textColor()
         label.font = .systemFont(ofSize: 17, weight: .medium)
         return label
@@ -58,6 +57,12 @@ class HeaderView: UIView{
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension HeaderView{
+    func configure(with name: String){
+        nameLabel.text = name
     }
 }
 
