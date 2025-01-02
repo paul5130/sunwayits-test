@@ -31,7 +31,6 @@ class HomeController: UIViewController{
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .backgroundColor()
-        
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
@@ -66,7 +65,7 @@ class HomeController: UIViewController{
         setupObserver()
     }
     private func setupObserver(){
-        viewModel.fetchFriends {[weak self] result in
+        viewModel.fetchMultipleApiFriends {[weak self] result in
             switch result {
             case .success(let friendsData):
                 print(friendsData)
