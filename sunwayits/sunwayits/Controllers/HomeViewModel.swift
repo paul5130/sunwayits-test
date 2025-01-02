@@ -9,8 +9,8 @@ import Foundation
 
 class HomeViewModel{
     private let apiService = APIService()
-    func fetchFriends(from url: String,completion: @escaping(Result<[FriendItem],APIError>) -> Void){
-        apiService.fetchData(from: url) { (result: Result<[FriendItem], APIError>) in
+    func fetchFriends(from url: String,completion: @escaping(Result<[Friend],APIError>) -> Void){
+        apiService.fetchData(from: url) { (result: Result<[Friend], APIError>) in
             switch result{
             case .success(let friends):
                 completion(.success(friends))

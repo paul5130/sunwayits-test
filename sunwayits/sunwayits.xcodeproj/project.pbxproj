@@ -7,24 +7,24 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		D76D18D92D23E6A2008EA988 /* sunwayits.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sunwayits.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D762FF2F2D265E2D00DCB9DE /* sunwayits.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sunwayits.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		D76D190D2D23EB52008EA988 /* Exceptions for "sunwayits" folder in "sunwayits" target */ = {
+		D762FF412D265E2E00DCB9DE /* Exceptions for "sunwayits" folder in "sunwayits" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				"Supporting Files/Info.plist",
+				Info.plist,
 			);
-			target = D76D18D82D23E6A2008EA988 /* sunwayits */;
+			target = D762FF2E2D265E2D00DCB9DE /* sunwayits */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		D76D18DB2D23E6A2008EA988 /* sunwayits */ = {
+		D762FF312D265E2D00DCB9DE /* sunwayits */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				D76D190D2D23EB52008EA988 /* Exceptions for "sunwayits" folder in "sunwayits" target */,
+				D762FF412D265E2E00DCB9DE /* Exceptions for "sunwayits" folder in "sunwayits" target */,
 			);
 			path = sunwayits;
 			sourceTree = "<group>";
@@ -32,7 +32,7 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		D76D18D62D23E6A2008EA988 /* Frameworks */ = {
+		D762FF2C2D265E2D00DCB9DE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -42,18 +42,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D76D18D02D23E6A2008EA988 = {
+		D762FF262D265E2D00DCB9DE = {
 			isa = PBXGroup;
 			children = (
-				D76D18DB2D23E6A2008EA988 /* sunwayits */,
-				D76D18DA2D23E6A2008EA988 /* Products */,
+				D762FF312D265E2D00DCB9DE /* sunwayits */,
+				D762FF302D265E2D00DCB9DE /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		D76D18DA2D23E6A2008EA988 /* Products */ = {
+		D762FF302D265E2D00DCB9DE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D76D18D92D23E6A2008EA988 /* sunwayits.app */,
+				D762FF2F2D265E2D00DCB9DE /* sunwayits.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -61,64 +61,64 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D76D18D82D23E6A2008EA988 /* sunwayits */ = {
+		D762FF2E2D265E2D00DCB9DE /* sunwayits */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D76D18EC2D23E6A3008EA988 /* Build configuration list for PBXNativeTarget "sunwayits" */;
+			buildConfigurationList = D762FF422D265E2E00DCB9DE /* Build configuration list for PBXNativeTarget "sunwayits" */;
 			buildPhases = (
-				D76D18D52D23E6A2008EA988 /* Sources */,
-				D76D18D62D23E6A2008EA988 /* Frameworks */,
-				D76D18D72D23E6A2008EA988 /* Resources */,
+				D762FF2B2D265E2D00DCB9DE /* Sources */,
+				D762FF2C2D265E2D00DCB9DE /* Frameworks */,
+				D762FF2D2D265E2D00DCB9DE /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				D76D18DB2D23E6A2008EA988 /* sunwayits */,
+				D762FF312D265E2D00DCB9DE /* sunwayits */,
 			);
 			name = sunwayits;
 			packageProductDependencies = (
 			);
 			productName = sunwayits;
-			productReference = D76D18D92D23E6A2008EA988 /* sunwayits.app */;
+			productReference = D762FF2F2D265E2D00DCB9DE /* sunwayits.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		D76D18D12D23E6A2008EA988 /* Project object */ = {
+		D762FF272D265E2D00DCB9DE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1610;
 				LastUpgradeCheck = 1610;
 				TargetAttributes = {
-					D76D18D82D23E6A2008EA988 = {
+					D762FF2E2D265E2D00DCB9DE = {
 						CreatedOnToolsVersion = 16.1;
 					};
 				};
 			};
-			buildConfigurationList = D76D18D42D23E6A2008EA988 /* Build configuration list for PBXProject "sunwayits" */;
+			buildConfigurationList = D762FF2A2D265E2D00DCB9DE /* Build configuration list for PBXProject "sunwayits" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = D76D18D02D23E6A2008EA988;
+			mainGroup = D762FF262D265E2D00DCB9DE;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = D76D18DA2D23E6A2008EA988 /* Products */;
+			productRefGroup = D762FF302D265E2D00DCB9DE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D76D18D82D23E6A2008EA988 /* sunwayits */,
+				D762FF2E2D265E2D00DCB9DE /* sunwayits */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		D76D18D72D23E6A2008EA988 /* Resources */ = {
+		D762FF2D2D265E2D00DCB9DE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -128,7 +128,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		D76D18D52D23E6A2008EA988 /* Sources */ = {
+		D762FF2B2D265E2D00DCB9DE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -138,7 +138,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		D76D18ED2D23E6A3008EA988 /* Debug */ = {
+		D762FF432D265E2E00DCB9DE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -147,7 +147,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 34Q7A274UP;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "sunwayits/Supporting Files/Info.plist";
+				INFOPLIST_FILE = sunwayits/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -170,7 +170,7 @@
 			};
 			name = Debug;
 		};
-		D76D18EE2D23E6A3008EA988 /* Release */ = {
+		D762FF442D265E2E00DCB9DE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -179,7 +179,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 34Q7A274UP;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "sunwayits/Supporting Files/Info.plist";
+				INFOPLIST_FILE = sunwayits/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -202,7 +202,7 @@
 			};
 			name = Release;
 		};
-		D76D18EF2D23E6A3008EA988 /* Debug */ = {
+		D762FF452D265E2E00DCB9DE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -265,7 +265,7 @@
 			};
 			name = Debug;
 		};
-		D76D18F02D23E6A3008EA988 /* Release */ = {
+		D762FF462D265E2E00DCB9DE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -324,25 +324,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D76D18D42D23E6A2008EA988 /* Build configuration list for PBXProject "sunwayits" */ = {
+		D762FF2A2D265E2D00DCB9DE /* Build configuration list for PBXProject "sunwayits" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D76D18EF2D23E6A3008EA988 /* Debug */,
-				D76D18F02D23E6A3008EA988 /* Release */,
+				D762FF452D265E2E00DCB9DE /* Debug */,
+				D762FF462D265E2E00DCB9DE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D76D18EC2D23E6A3008EA988 /* Build configuration list for PBXNativeTarget "sunwayits" */ = {
+		D762FF422D265E2E00DCB9DE /* Build configuration list for PBXNativeTarget "sunwayits" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D76D18ED2D23E6A3008EA988 /* Debug */,
-				D76D18EE2D23E6A3008EA988 /* Release */,
+				D762FF432D265E2E00DCB9DE /* Debug */,
+				D762FF442D265E2E00DCB9DE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = D76D18D12D23E6A2008EA988 /* Project object */;
+	rootObject = D762FF272D265E2D00DCB9DE /* Project object */;
 }

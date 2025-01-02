@@ -1,5 +1,5 @@
 //
-//  FriendItem.swift
+//  Friend.swift
 //  sunwayits
 //
 //  Created by Paul Wen on 2024/12/31.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FriendItem: Decodable{
+struct Friend: Decodable{
     let name: String
     let status: Int
     let isTop: String
