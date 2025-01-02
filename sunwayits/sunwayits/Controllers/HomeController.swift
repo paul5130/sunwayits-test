@@ -30,6 +30,7 @@ class HomeController: UIViewController{
     }
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
+        tableView.keyboardDismissMode = .onDrag
         tableView.backgroundColor = .backgroundColor()
         tableView.dataSource = self
         tableView.delegate = self
@@ -63,8 +64,23 @@ class HomeController: UIViewController{
         super.viewDidLoad()
         setupViews()
         setupObserver()
+        
+    }
+    @objc private func handleSearchNotification(_ notification: Notification){
+        if let searchText = notification.userInfo?["searchText"] as? String{
+            print(searchText)
+            viewModel.filterFriends(searchText)
+            self.friends = viewModel.filteredFriends
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .searchBarTextDidChange, object: nil)
     }
     private func setupObserver(){
+        NotificationCenter.default.addObserver(self, selector: #selector(handleSearchNotification), name: .searchBarTextDidChange, object: nil)
         viewModel.fetchMultipleApiFriends {[weak self] result in
             switch result {
             case .success(let friendsData):
@@ -135,7 +151,6 @@ extension HomeController: UITableViewDelegate{
         0
     }
 }
-
 
 import SwiftUI
 struct HomeController_Previews: PreviewProvider {

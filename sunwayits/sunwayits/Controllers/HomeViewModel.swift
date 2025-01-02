@@ -16,6 +16,8 @@ class HomeViewModel{
     private let apiService = APIService()
     private let urls: [String]
     private let userDataUrl = "https://dimanyen.github.io/man.json"
+    private var isFriends = [Friend]()
+    var filteredFriends = [Friend]()
     init(friendState: FriendState) {
         switch friendState {
         case .noFriends:
@@ -57,6 +59,8 @@ class HomeViewModel{
             let resultFriends = Array(mergedDict.values)
             let invitingFriends = resultFriends.filter{$0.status == 0}
             let isFriends = resultFriends.filter{$0.status != 0}
+            self.isFriends = isFriends
+            self.filteredFriends = isFriends
             let friendsData = FriendsData(invitingFriends: invitingFriends, friends: isFriends)
             completion(.success(friendsData))
         }
@@ -73,6 +77,13 @@ class HomeViewModel{
             case .failure(let error):
                 completion(.failure(error))
             }
+        }
+    }
+    func filterFriends(_ keyword: String){
+        if keyword.isEmpty{
+            filteredFriends = isFriends
+        }else{
+            filteredFriends = isFriends.filter{ $0.name.contains(keyword)}
         }
     }
 }

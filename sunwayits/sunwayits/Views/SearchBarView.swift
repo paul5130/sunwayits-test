@@ -8,8 +8,9 @@
 import UIKit
 
 class SearchBarView: UIView{
-    private let searchView: UISearchBar = {
+    private lazy var searchView: UISearchBar = {
         let sb = UISearchBar()
+        sb.delegate = self
         sb.placeholder = "想轉一筆給誰呢？"
         sb.searchBarStyle = .minimal
         return sb
@@ -36,6 +37,15 @@ class SearchBarView: UIView{
     }
 }
 
+extension SearchBarView: UISearchBarDelegate{
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        NotificationCenter.default.post(name: .searchBarTextDidChange, object: nil, userInfo: ["searchText": searchText])
+    }
+    
+}
+extension Notification.Name{
+    static let searchBarTextDidChange = Notification.Name("searchBarTextDidChange")
+}
 import SwiftUI
 
 struct SearchBarView_Previews: PreviewProvider {
