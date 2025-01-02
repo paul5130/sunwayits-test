@@ -14,5 +14,5 @@ struct GetUserData: Decodable{
 
 struct UserData: Decodable{
     let name: String
-    let kokoid: String
+    let kokoid: String?
 }

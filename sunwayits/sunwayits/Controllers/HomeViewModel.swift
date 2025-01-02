@@ -10,6 +10,12 @@ import Foundation
 struct FriendsData{
     let invitingFriends: [Friend]
     let friends: [Friend]
+    let isEmpty: Bool
+    init(invitingFriends: [Friend], friends: [Friend]) {
+        self.invitingFriends = invitingFriends
+        self.friends = friends
+        self.isEmpty = invitingFriends.count == 0 && friends.count == 0
+    }
 }
 
 class HomeViewModel{

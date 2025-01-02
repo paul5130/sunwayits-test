@@ -16,8 +16,8 @@ class HeaderView: UIView{
     }()
     private let idLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .textColor()
         label.text = "設定 KOKO ID"
+        label.textColor = .textColor()
         label.font = .systemFont(ofSize: 13, weight: .regular)
         return label
     }()
@@ -61,8 +61,9 @@ class HeaderView: UIView{
 }
 
 extension HeaderView{
-    func configure(with name: String){
+    func configure(with name: String,kokoId: String?){
         nameLabel.text = name
+        idLabel.text = kokoId
     }
 }
 
