@@ -37,6 +37,17 @@ class HomeController: UIViewController{
         tableView.separatorStyle = .none
         return tableView
     }()
+    private lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+        return refreshControl
+    }()
+    @objc private func handleRefresh(){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            self.fetchData()
+        }
+    }
+    
     private let invitingFriendCellId = "invitingFriendCellId"
     private let friendCellId = "friendCellId"
     private func setupViews() {
@@ -46,6 +57,7 @@ class HomeController: UIViewController{
         navigationItem.leftBarButtonItems = [atmBarButton,dollarBarButton]
         navigationItem.rightBarButtonItem = scanBarButton
         view.addSubview(tableView)
+        tableView.refreshControl = refreshControl
         tableView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         tableView.addSubview(emptyFriendsView)
         emptyFriendsView.anchor(top: tableView.topAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor, paddingTop: 200, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
@@ -62,7 +74,7 @@ class HomeController: UIViewController{
         super.viewDidLoad()
         setupViews()
         setupObserver()
-        
+        fetchData()
     }
     @objc private func handleSearchNotification(_ notification: Notification){
         if let searchText = notification.userInfo?["searchText"] as? String{
@@ -91,9 +103,7 @@ class HomeController: UIViewController{
     @objc private func handleKeyboardWillHide(notification: Notification){
         tableView.contentInset = .zero
     }
-    private func setupObserver(){
-        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleSearchNotification), name: .searchBarTextDidChange, object: nil)
+    private func fetchData(){
         viewModel.fetchMultipleApiFriends {[weak self] result in
             switch result {
             case .success(let friendsData):
@@ -102,6 +112,7 @@ class HomeController: UIViewController{
                 self?.friends = friendsData.friends
                 DispatchQueue.main.async {
                     self?.emptyFriendsView.isHidden = !friendsData.isEmpty
+                    self?.refreshControl.endRefreshing()
                     self?.tableView.reloadData()
                 }
             case .failure(let failure):
@@ -118,6 +129,11 @@ class HomeController: UIViewController{
                 print(failure)
             }
         }
+    }
+    private func setupObserver(){
+        NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleSearchNotification), name: .searchBarTextDidChange, object: nil)
+        
     }
 }
 extension HomeController: UITableViewDataSource{
