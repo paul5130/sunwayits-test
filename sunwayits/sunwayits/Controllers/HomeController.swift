@@ -104,7 +104,7 @@ class HomeController: UIViewController{
         tableView.contentInset = .zero
     }
     private func fetchData(){
-        viewModel.fetchMultipleApiFriends {[weak self] result in
+        viewModel.fetchFriends {[weak self] result in
             switch result {
             case .success(let friendsData):
                 print(friendsData)
@@ -188,18 +188,18 @@ extension HomeController: UITableViewDelegate{
     }
 }
 
-import SwiftUI
-struct HomeController_Previews: PreviewProvider {
-    static var previews: some View{
-        ContainerView()
-    }
-    struct ContainerView: UIViewControllerRepresentable {
-        func makeUIViewController(context: Context) -> some UIViewController {
-            let navController = UINavigationController(rootViewController: HomeController(state: .noFriends))
-            return navController
-        }
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-            
-        }
-    }
-}
+//import SwiftUI
+//struct HomeController_Previews: PreviewProvider {
+//    static var previews: some View{
+//        ContainerView()
+//    }
+//    struct ContainerView: UIViewControllerRepresentable {
+//        func makeUIViewController(context: Context) -> some UIViewController {
+//            let navController = UINavigationController(rootViewController: HomeController(state: .noFriends))
+//            return navController
+//        }
+//        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+//            
+//        }
+//    }
+//}

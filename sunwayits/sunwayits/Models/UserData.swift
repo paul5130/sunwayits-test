@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GetUserData: Decodable{
+struct UserResponse: Decodable{
     let response: [UserData]
     
 }

@@ -9,9 +9,9 @@ import Foundation
 
 enum APIError: Error{
     case invalidURL
-        case networkError(Error)
-        case invalidResponse
-        case decodingError(Error)
+    case networkError(Error)
+    case invalidResponse
+    case decodingError(Error)
 }
 
 class APIService{

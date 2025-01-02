@@ -14,32 +14,26 @@ struct FriendsData{
     init(invitingFriends: [Friend], friends: [Friend]) {
         self.invitingFriends = invitingFriends
         self.friends = friends
-        self.isEmpty = invitingFriends.count == 0 && friends.count == 0
+        self.isEmpty = invitingFriends.isEmpty && friends.isEmpty
     }
 }
 
 class HomeViewModel{
     private let apiService = APIService()
-    private let urls: [String]
+    private let friendApiUrls: [String]
     private let userDataUrl = "https://dimanyen.github.io/man.json"
-    private var isFriends = [Friend]()
+    private var allFriends = [Friend]()
     var filteredFriends = [Friend]()
+    
     init(friendState: FriendState) {
-        switch friendState {
-        case .noFriends:
-            urls = ["https://dimanyen.github.io/friend4.json"]
-        case .friendWithInvites:
-            urls = ["https://dimanyen.github.io/friend3.json"]
-        case .friendWithoutInvites:
-            urls = ["https://dimanyen.github.io/friend1.json","https://dimanyen.github.io/friend2.json"]
-        }
+        friendApiUrls = Self.getUrls(friendState)
     }
-    func fetchMultipleApiFriends(completion: @escaping(Result<FriendsData,APIError>) -> Void){
+    func fetchFriends(completion: @escaping(Result<FriendsData,APIError>) -> Void){
         var results = [Friend]()
         let group = DispatchGroup()
-        for url in urls{
+        for url in friendApiUrls{
             group.enter()
-            apiService.fetchData(from: url) { (result: Result<GetFriend, APIError>) in
+            apiService.fetchData(from: url) { (result: Result<FriendResponse, APIError>) in
                 print("url: \(url)")
                 switch result {
                 case .success(let response):
@@ -65,14 +59,14 @@ class HomeViewModel{
             let resultFriends = Array(mergedDict.values)
             let invitingFriends = resultFriends.filter{$0.status == 0}
             let isFriends = resultFriends.filter{$0.status != 0}
-            self.isFriends = isFriends
+            self.allFriends = isFriends
             self.filteredFriends = isFriends
             let friendsData = FriendsData(invitingFriends: invitingFriends, friends: isFriends)
             completion(.success(friendsData))
         }
     }
     func fetchUserData(completion: @escaping(Result<UserData,APIError>) -> Void){
-        apiService.fetchData(from: userDataUrl) { (result: Result<GetUserData,APIError>) in
+        apiService.fetchData(from: userDataUrl) { (result: Result<UserResponse,APIError>) in
             switch result {
             case .success(let response):
                 guard let userData = response.response.first else {
@@ -87,9 +81,65 @@ class HomeViewModel{
     }
     func filterFriends(_ keyword: String){
         if keyword.isEmpty{
-            filteredFriends = isFriends
+            filteredFriends = allFriends
         }else{
-            filteredFriends = isFriends.filter{ $0.name.contains(keyword)}
+            filteredFriends = allFriends.filter{ $0.name.contains(keyword)}
         }
     }
+    
+    private static func getUrls(_ friendState: FriendState) -> [String] {
+        switch friendState {
+        case .noFriends:
+            return ["https://dimanyen.github.io/friend4.json"]
+        case .friendWithInvites:
+            return ["https://dimanyen.github.io/friend3.json"]
+        case .friendWithoutInvites:
+            return ["https://dimanyen.github.io/friend1.json","https://dimanyen.github.io/friend2.json"]
+        }
+    }
+}
+
+extension HomeViewModel{
+    func fetchSingleApi<T: Decodable>(url: String, completion: @escaping (Result<T, APIError>) -> Void) {
+            apiService.fetchData(from: url, completion: completion)
+        }
+    func fetchMultipleApis(urls: [String], completion: @escaping (Result<[Friend], APIError>) -> Void) {
+            var results = [Friend]()
+            let group = DispatchGroup()
+            var fetchError: APIError?
+
+            for url in urls {
+                group.enter()
+                fetchSingleApi(url: url) { (result: Result<FriendResponse, APIError>) in
+                    switch result {
+                    case .success(let response):
+                        results.append(contentsOf: response.response)
+                    case .failure(let error):
+                        fetchError = error
+                    }
+                    group.leave()
+                }
+            }
+
+            group.notify(queue: .main) {
+                if let error = fetchError {
+                    completion(.failure(error))
+                } else {
+                    completion(.success(results))
+                }
+            }
+        }
+    static func mergeFriends(_ friends: [Friend]) -> [Friend] {
+            var mergedDict = [String: Friend]()
+            for friend in friends {
+                if let existing = mergedDict[friend.fid] {
+                    if friend.updateDate > existing.updateDate {
+                        mergedDict[friend.fid] = friend
+                    }
+                } else {
+                    mergedDict[friend.fid] = friend
+                }
+            }
+            return Array(mergedDict.values)
+        }
 }

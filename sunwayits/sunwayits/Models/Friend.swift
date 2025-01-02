@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GetFriend: Decodable{
+struct FriendResponse: Decodable{
     let response: [Friend]
     
 }
@@ -19,3 +19,4 @@ struct Friend: Decodable{
     let fid: String
     let updateDate: String
 }
+
