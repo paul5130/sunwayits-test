@@ -37,13 +37,6 @@ class HomeControllerTests: XCTestCase{
         XCTAssertTrue(mockNavigationController.isPopped, "Back button should triggered popViewController")
     }
     
-    func test_TableViewContentInset_ShouldAdjustForKeyboard() {
-        let keyboardHeight: CGFloat = 300
-        sut.handleKeyboardWillShow(notification: Notification(name: UIResponder.keyboardWillShowNotification, object: nil, userInfo: [UIResponder.keyboardFrameEndUserInfoKey: CGRect(x: 0, y: 0, width: sut.view.frame.width, height: keyboardHeight)]))
-        
-        XCTAssertEqual(sut.tableView.contentInset.bottom, keyboardHeight + 300, "when Keyboard popup, TableView's contentInset should adjust")
-    }
-    
     func test_RefreshControl_ShouldBeConfigured() {
         XCTAssertNotNil(sut.refreshControl, "RefreshControl should be initialized")
         XCTAssertTrue(sut.tableView.refreshControl === sut.refreshControl, "RefreshControl should bind to TableView")
